@@ -7,72 +7,69 @@ module.exports = () => {
   return {
     mode: 'development',
     entry: {
-      // Define entry points for different JavaScript files
       main: './src/js/index.js',
-      install: './src/js/install.js',
-      database: './src/js/database.js',
-      editor: './src/js/editor.js',
-      header: './src/js/header.js',
+      install: './src/js/install.js'
     },
     output: {
-      // Configure output file names and directory
       filename: '[name].bundle.js',
       path: path.resolve(__dirname, 'dist'),
     },
     plugins: [
-      // Generate HTML files and inject bundles
       new HtmlWebpackPlugin({
-        template: './index.html', // Specify the template HTML file
-        title: 'JATE' // Set the title of the HTML document
+        template: path.resolve(__dirname, 'dist', 'index.html'),
+        title: "JATE",
       }),
-      // Inject custom service worker into the bundle
+      // injects our custom service worker from src-sw.js
       new InjectManifest({
-        swSrc: './src-sw.js', // Specify the path to the service worker source file
-        swDest: 'src-sw.js', // Specify the destination for the injected service worker
+        swSrc: "./src-sw.js",
+        swDest: "src-sw.js",
       }),
-      // Generate a manifest.json file for PWA
+      // creates a manifest.json file
       new WebpackPwaManifest({
         fingerprints: false,
         inject: true,
-        name: 'Just Another Text Editor',
-        short_name: 'JATE',
-        description: 'Just another text editor',
-        background_color: '#225ca3',
-        theme_color: '#225ca3',
-        start_url: '/',
-        publicPath: '/',
+        name: "Just Another Text Editor",
+        short_name: "JATE",
+        description: "Text Editor with offline capabilities using IndexedDB",
+        background_color: "#225ca3",
+        theme_color: "#225ca3",
+        start_url: "/",
+        publicPath: "/",
         icons: [
-          // Define icons and their sizes for the PWA
           {
-            src: path.resolve('src/images/logo.png'), // Specify the path to the icon image
-            sizes: [96, 128, 192, 256, 384, 512], // Specify different sizes for the icon
-            destination: path.join('assets', 'icons'), // Specify the destination directory for icons
+            src: path.resolve(__dirname, 'src/images/logo.png'), // Adjusted path
+            sizes: [96, 128, 192, 256, 384, 512], // multiple sizes
+            destination: path.join("assets", "icons"),
           },
         ],
       }),
     ],
 
     module: {
-      // Define module rules for handling different file types
       rules: [
-        // CSS Loaders
         {
-          test: /\.css$/i,
+          test: /\.css$/,
           use: ['style-loader', 'css-loader'],
         },
-        // JavaScript Loaders (using Babel)
         {
           test: /\.m?js$/,
           exclude: /node_modules/,
           use: {
-            loader: 'babel-loader',
+            loader: "babel-loader",
             options: {
-              presets: ['@babel/preset-env'],
-              plugins: ['@babel/plugin-proposal-object-rest-spread', '@babel/transform-runtime'],
+              presets: ["@babel/preset-env"],
+              plugins: [
+                "@babel/plugin-proposal-object-rest-spread",
+                "@babel/transform-runtime",
+              ],
             },
           },
-        },
+        }
+        
       ],
+    },
+    infrastructureLogging: {
+      level: 'warn', // Reduce logging noise from deprecation warnings
     },
   };
 };
