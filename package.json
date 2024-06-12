@@ -1,25 +1,32 @@
 {
-    "name": "JATE",
-    "version": "1.0.0",
-    "description": "",
-    "main": "server.js",
-    "scripts": {
-      "start:dev": "",
-      "start": "",
-      "server": "",
-      "build": "",
-      "install": "",
-      "client": ""
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-      "express": "^4.17.1",
-      "if-env": "^1.0.4"
-    },
-    "devDependencies": {
-      "concurrently": "^5.2.0",
-      "nodemon": "^2.0.4"
-    }
+  "name": "JATE",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start:dev": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "cd client && webpack --config webpack.config.js && cd .. && node server/server.js",
+    "server": "nodemon server/server.js",
+    "build": "echo 'Build script placeholder'",
+    "install": "echo 'Install script placeholder'",
+    "client": "echo 'Client script placeholder'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel": "^6.23.0",
+    "express": "^4.17.1",
+    "idb": "^8.0.0",
+    "if-env": "^1.0.4"
+  },
+  "devDependencies": {
+    "concurrently": "^5.2.0",
+    "css-loader": "^7.1.2",
+    "nodemon": "^2.0.4",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4",
+    "webpack-pwa-manifest": "^4.3.0"
   }
+}
