@@ -16,7 +16,7 @@ module.exports = () => {
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: path.resolve(__dirname, 'dist', 'index.html'),
+        template: path.resolve(__dirname, 'index.html'), // Adjusted path to client/index.html
         title: "JATE",
       }),
       // injects our custom service worker from src-sw.js
@@ -60,7 +60,7 @@ module.exports = () => {
               presets: ["@babel/preset-env"],
               plugins: [
                 "@babel/plugin-proposal-object-rest-spread",
-                "@babel/transform-runtime",
+                "@babel/plugin-transform-runtime", // Correct plugin name
               ],
             },
           },
@@ -73,3 +73,4 @@ module.exports = () => {
     },
   };
 };
+
